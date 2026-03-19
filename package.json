@@ -1,0 +1,26 @@
+{
+  "name": "mexicovisitado",
+  "version": "1.0.0",
+  "description": "Highligths the visited states of MX",
+  "homepage": "https://github.com/Azpil01/mexicoVisitado#readme",
+  "bugs": {
+    "url": "https://github.com/Azpil01/mexicoVisitado/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azpil01/mexicoVisitado.git"
+  },
+  "license": "ISC",
+  "author": "Azpil",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "mysql2": "^3.20.0"
+  }
+}
