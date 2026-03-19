@@ -64,7 +64,9 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.post("/add", async (req, res) => {})
+app.post("/add", async (req, res) => {}) //TODO Tenemos que agregar la ruta para que se puedan agregar estados a los usuarios
+//TODO se necesitará una query para que consigamos el id del estado cuando el usuario ingrese el nombre del estado
+//TODO después necesitamos una query para insertar ese id del estado con el usuario actual
 
 app.listen(port, () => {
   console.log(`All ok from port ${port}`);
