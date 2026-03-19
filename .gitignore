@@ -1,0 +1,24 @@
+# Dependencias (NUNCA subir esta carpeta)
+node_modules/
+jspm_packages/
+
+# Variables de entorno (SECRETOS: contraseñas de Postgres, APIs de Azure)
+.env
+.env.local
+config.locals.cjs
+
+# Logs (Archivos que se generan al correr el servidor)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs
+*.log
+
+# Archivos del sistema (Basura que crea Windows o Mac)
+.DS_Store
+Thumbs.db
+
+# Carpetas de compilación o temporales
+dist/
+build/
+.cache/
