@@ -1,32 +1,66 @@
+// import express from "express";
+// import bodyParser from "body-parser";
+// import mysql from "mysql2/promise";
+// import { createRequire } from "node:module";
+// import { get } from "node:http";
+
+// const app = express();
+// const port = process.env.PORT || 3000;
+
+// const require = createRequire(import.meta.url);
+
+// let theUser;
+// let thePass;
+// let currentUserId = 1;
+
+// try {
+//   const local = require("./config.locals.cjs");
+//   theUser =process.env.USER || local.USER;
+//   thePass = process.env.PASSWORD ||local.PASSWORD;
+// } catch (error) {
+//   console.error("Error al cargar config.locals.cjs", error.message);
+// }
+
+// const connection = await mysql.createConnection({
+//   host: "srv1293.hstgr.io",
+//   user: theUser,
+//   database: "u354636099_test1",
+//   password: thePass,
+// });
+
 import express from "express";
 import bodyParser from "body-parser";
 import mysql from "mysql2/promise";
 import { createRequire } from "node:module";
-import { get } from "node:http";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 const require = createRequire(import.meta.url);
 
-let theUser;
-let thePass;
-let currentUserId = 1;
-
+let theUser, thePass;
 try {
-  const local = require("./config.locals.cjs");
-  theUser =process.env.USER || local.USER;
-  thePass = process.env.PASSWORD ||local.PASSWORD;
-} catch (error) {
-  console.error("Error al cargar config.locals.cjs", error.message);
+ const local = require("./config.locals.cjs");
+ theUser = process.env.DB_USER || process.env.USER || local.USER;
+ thePass = process.env.DB_PASSWORD || process.env.PASSWORD || local.PASSWORD;
+} catch (e) {
+ console.error("Error al cargar config.locals.cjs", e.message);
 }
 
-const connection = await mysql.createConnection({
-  host: "srv1293.hstgr.io",
-  user: theUser,
-  database: "u354636099_test1",
-  password: thePass,
-});
+let connection;
+
+async function boot() {
+ connection = await mysql.createConnection({
+ host: "srv1293.hstgr.io",
+ user: theUser,
+ database: "u354636099_test1",
+ password: thePass,
+ });
+
+  app.listen(port, () => console.log(`All ok from port ${port}`));
+}
+
+boot().catch(err => console.error("Boot error:", err));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
