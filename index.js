@@ -1,66 +1,40 @@
-// import express from "express";
-// import bodyParser from "body-parser";
-// import mysql from "mysql2/promise";
-// import { createRequire } from "node:module";
-// import { get } from "node:http";
-
-// const app = express();
-// const port = process.env.PORT || 3000;
-
-// const require = createRequire(import.meta.url);
-
-// let theUser;
-// let thePass;
-// let currentUserId = 1;
-
-// try {
-//   const local = require("./config.locals.cjs");
-//   theUser =process.env.USER || local.USER;
-//   thePass = process.env.PASSWORD ||local.PASSWORD;
-// } catch (error) {
-//   console.error("Error al cargar config.locals.cjs", error.message);
-// }
-
-// const connection = await mysql.createConnection({
-//   host: "srv1293.hstgr.io",
-//   user: theUser,
-//   database: "u354636099_test1",
-//   password: thePass,
-// });
-
 import express from "express";
 import bodyParser from "body-parser";
 import mysql from "mysql2/promise";
 import { createRequire } from "node:module";
+import "dotenv/config";
+import { get } from "node:http";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 const require = createRequire(import.meta.url);
 
-let theUser, thePass;
-try {
- const local = require("./config.locals.cjs");
- theUser = process.env.DB_USER || process.env.USER || local.USER;
- thePass = process.env.DB_PASSWORD || process.env.PASSWORD || local.PASSWORD;
-} catch (e) {
- console.error("Error al cargar config.locals.cjs", e.message);
+// let theUser;
+// let thePass;
+let currentUserId = 1;
+
+// try {
+//   const local = require("./config.locals.cjs");
+//   theUser = process.env.DB_USER || local.USER;
+//   thePass = process.env.DB_PASSWORD || local.PASSWORD;
+// } catch (error) {
+//   console.error("Error al cargar config.locals.cjs", error.message);
+// }
+
+const theUser = process.env.DB_USER;
+const thePass = process.env.DB_PASSWORD;
+
+if (!theUser || !thePass) {
+  console.error("ERROR: Faltan las credenciales en las variables de entorno.");
 }
 
-let connection;
-
-async function boot() {
- connection = await mysql.createConnection({
- host: "srv1293.hstgr.io",
- user: theUser,
- database: "u354636099_test1",
- password: thePass,
- });
-
-  app.listen(port, () => console.log(`All ok from port ${port}`));
-}
-
-boot().catch(err => console.error("Boot error:", err));
+const connection = await mysql.createConnection({
+  host: "srv1293.hstgr.io",
+  user: theUser,
+  database: "u354636099_test1",
+  password: thePass,
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -182,9 +156,7 @@ app.post("/clear", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`All ok from port ${port}`);
-  console.log("ENV OK:", {
- hasUSER: Boolean(process.env.USER),
- hasPASSWORD: Boolean(process.env.PASSWORD),
 });
-});
-
+//TODO Tenemos que agregar la ruta para que se puedan agregar estados a los usuarios
+//TODO se necesitará una query para que consigamos el id del estado cuando el usuario ingrese el nombre del estado
+//TODO después necesitamos una query para insertar ese id del estado con el usuario actual
