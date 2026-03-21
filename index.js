@@ -29,12 +29,34 @@ if (!theUser || !thePass) {
   console.error("ERROR: Faltan las credenciales en las variables de entorno.");
 }
 
-const connection = await mysql.createConnection({
-  host: "srv1293.hstgr.io",
-  user: theUser,
-  database: "u354636099_test1",
-  password: thePass,
-});
+// const connection = await mysql.createConnection({
+//   host: "srv1293.hstgr.io",
+//   user: theUser,
+//   database: "u354636099_test1",
+//   password: thePass,
+// });
+
+
+//-
+let connection;
+
+
+async function initializeDB() {
+  try {
+    connection = await mysql.createConnection({
+      host: "srv1293.hstgr.io",
+      user: theUser,
+      database: "u354636099_test1",
+      password: thePass,
+    });
+    console.log("Conectado a la base de datos de Hostinger");
+  } catch (err) {
+    console.error("Error inicializando la BD:", err);
+  }
+}
+
+initializeDB();
+//-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
