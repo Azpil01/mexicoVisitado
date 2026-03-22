@@ -137,7 +137,6 @@ app.get("/", async (req, res) => {
 app.post("/add", async (req, res) => {
   const inputEstado = req.body.estado; //* Esta const guardará el input que el usuario introdujo en el formulario
   const currentUser = await getDataCurrentUser();
-
   try {
     const result = await connection.query(
       //* Aquí hacemos la consulta para obtener el id de la base de datos en donde el nombre sea parecido a lo que introdujo el usuario
@@ -200,9 +199,7 @@ app.post("/clear", async (req, res) => {
   }
 })
 
-app.listen(port, () => {
-  console.log(`All ok from port ${port}`);
-});
+
 //TODO Tenemos que agregar la ruta para que se puedan agregar estados a los usuarios
 //TODO se necesitará una query para que consigamos el id del estado cuando el usuario ingrese el nombre del estado
 //TODO después necesitamos una query para insertar ese id del estado con el usuario actual
