@@ -37,26 +37,50 @@ if (!theUser || !thePass) {
 // });
 
 
-//-
+// //-
+// let connection;
+
+
+// async function initializeDB() {
+//   try {
+//     connection = await mysql.createConnection({
+//       host: "srv1293.hstgr.io",
+//       user: theUser,
+//       database: "u354636099_test1",
+//       password: thePass,
+//     });
+//     console.log("Conectado a la base de datos de Hostinger");
+//   } catch (err) {
+//     console.error("Error inicializando la BD:", err);
+//   }
+// }
+
+// initializeDB();
+// //-
+
+//*
 let connection;
 
-
 async function initializeDB() {
-  try {
-    connection = await mysql.createConnection({
-      host: "srv1293.hstgr.io",
-      user: theUser,
-      database: "u354636099_test1",
-      password: thePass,
-    });
-    console.log("Conectado a la base de datos de Hostinger");
-  } catch (err) {
-    console.error("Error inicializando la BD:", err);
-  }
+ connection = await mysql.createConnection({
+ host: "srv1293.hstgr.io",
+ user: theUser,
+ database: "u354636099_test1",
+ password: thePass,
+ });
+ console.log("Conectado a la base de datos de Hostinger");
 }
 
-initializeDB();
-//-
+(async () => {
+ try {
+ await initializeDB(); // <- clave
+ app.listen(3000, () => console.log("All ok from port 3000"));
+ } catch (err) {
+ console.error("Error inicializando la BD:", err);
+ process.exit(1); // <- evita que atienda requests sin BD
+ }
+})();
+//*
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
