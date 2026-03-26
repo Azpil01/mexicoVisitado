@@ -10,7 +10,7 @@
 
 <body>
   <form class="tab-view tab-view-height-auto" action="/user" method="post">
-    <% users.forEach(function(user) { %>
+    <% users.forEach((user) => { %>
       <input type="submit" name="user" value="<%= user.id %>" id="<%= user.id %>">
       <label for="<%= user.id %>" style="background-color: <%= user.color %>;">
         <%= user.name %>
@@ -128,6 +128,31 @@
       document.getElementById(code).style.fill = "<%= color %>"
     });
   </script>
+  <script>
+  // Mensaje para saber que el script cargó al abrir la página
+  console.log("Script de autocompletado cargado correctamente");
+
+  const inputEstado = document.querySelector('input[name="estado"]');
+  const idLista = 'estados-mexico';
+
+  // Forzamos que inicie sin lista
+  inputEstado.removeAttribute('list');
+  console.log("Atributo 'list' removido al inicio");
+
+  inputEstado.addEventListener('input', (e) => {
+    const texto = e.target.value;
+    console.log("El usuario escribió:", texto, "| Largo:", texto.length);
+
+    if (texto.length >= 2) {
+      inputEstado.setAttribute('list', idLista);
+      console.log("¡LISTA ACTIVADA!");
+    } else {
+      inputEstado.removeAttribute('list');
+      console.log("Lista desactivada (menos de 3 caracteres)");
+    }
+  });
+</script>
+  
 </body>
 
 </html>
