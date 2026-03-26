@@ -23,8 +23,13 @@
   </form>
 
   <form action="/add" method="post">
-    <input type="text" name="estado" autofocus placeholder="<%= locals.error ? error :  'Nombre del estado'%>">
+    <input type="text" name="estado" list="estados-mexico" autocomplete="off" autofocus placeholder="<%= locals.error ? error :  'Nombre del estado'%>">
     <button type="submit" style="background-color: <%= color %>;">Agregar estado</button>
+    <datalist id="estados-mexico">
+      <% nombresEstados.forEach((estado) => { %>
+          <option value="<%= estado %>"></option>
+      <% }) %>
+    </datalist>
   </form>
 
    <form action="/clear" method="post">    
